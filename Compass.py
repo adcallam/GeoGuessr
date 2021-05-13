@@ -1,31 +1,3 @@
-#change screenshot function to accept bounding box coordinates
-#create a function for determining the hemisphere
-#make better names for functions and provide descriptions of each functions exact function. 
-#consider the cropping region for taking screenshots and whether it should be changed/improved
-#improve variable names and use all caps for constants. constants should be global. try to make variable names descriptive yet as short as possible. use "underscore" syntax
-#get rid of any "magic" variables by creating more constants
-#improve the names given to screenshots
-
-#make it so the hemisphere can be determined without centering the sun on the screen?
-#improve sun detection (filter out electrical distribution cables, improve how it ignores the top right corner icon, etc)
-#add dictionary with list of countries and their probabilities
-#make function that guesses which country it thinks its in
-#optimize compass deviation from west/east
-#optimize what countries it finds to be more likely if the sun is not detected 
-#add language detection, being able to detect what side of the road people are driving on (based on road signs, road markings and possibly the direction of other cars
-#make a formula to calculate the minimum possible duration for when the drag function is called. This way the programmer doesn't enter in anything.
-
-#image quality (USA and Australia)
-#roof rack (and black tape on roof rack)
-#kenya snorkel, ghana tape
-#license plates (yellow, white, white with blue, length)
-#side of the road people are driving on (determine what side of the road you are driving on using your own car?)
-#language
-#road markings (centerline and also if dashed white outer lines)
-#car models, types of vehicles (trucks or not)
-#red houses in nordic countries
-
-
 # Standard imports
 # --------------------------------------------------------------------------------------------------------------------------------------------------
 import cv2
@@ -50,7 +22,6 @@ model = fasttext.load_model('lid.176.bin')
 # Constant Variables
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
-#rows, columns, channels = image.shape
 default_width=2558 #used to be 2582 for some reason
 default_height=1438 #used to be 1402 for some reason
 turn_dist=(1500/2558)*default_width #1500
@@ -2489,8 +2460,7 @@ def determine_country_probabilities(hemisphere, camera_gen, japan_blur, aerial, 
     print("\nTop 10 Most Probable Countries")
     print("__________________________________\n")
     i=0
-    #dict_keys=list(sorted_country_probabilities.keys())
-    #dict_values=list(sorted_country_probabilities.values())
+
     while(i<10):
         print("{}. {} {}%\n".format(i+1, sorted_country_probabilities[i][0], round(sorted_country_probabilities[i][1], 0)))
         i=i+1
@@ -2533,7 +2503,7 @@ find_window()
 win32gui.SetForegroundWindow(find_window.hwnd)
 
 #Play 5 rounds of Geoguessr
-while(geo_round<2):
+while(geo_round<6):
 
     print("\nRound {}".format(geo_round))
     print("________________________________________________________________ \n")
@@ -2638,6 +2608,7 @@ while(geo_round<2):
     #Clicks the "Guess" button
     click_guess()
     
+    #Clicks the "Next Round"/"View Summary" button once it is visible
     click_next_round()
 
     #Waits 5 seconds to ensure the next round has time to load
